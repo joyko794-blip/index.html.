@@ -3,162 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STAFF SBS - Management System</title>
+    <title>STAFF SBS - Login Divisi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans pb-20">
 
-    <!-- Header / Navbar -->
-    <header class="bg-emerald-800 text-white p-4 sticky top-0 z-50 shadow-md">
-        <div class="max-w-md mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-full bg-emerald-700 flex items-center justify-center font-bold border border-emerald-500">
+    <!-- Halaman Login Divisi -->
+    <div id="loginSection" class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200 w-full max-w-md space-y-4">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-emerald-800 text-white font-bold text-2xl rounded-full flex items-center justify-center mx-auto mb-2">
                     SBS
                 </div>
-                <div>
-                    <h1 class="font-bold text-lg leading-tight">STAFF SBS</h1>
-                    <p class="text-xs text-emerald-200">PT Sri Bandiyah Soewarto</p>
-                </div>
+                <h2 class="text-xl font-bold text-slate-800">PT Sri Bandiyah Soewarto</h2>
+                <p class="text-xs text-slate-500">Portal Login Staf Multi-Divisi</p>
             </div>
-            <button onclick="switchRoleModal()" class="text-xs bg-emerald-700 hover:bg-emerald-600 px-3 py-1.5 rounded-full border border-emerald-500 flex items-center gap-1 transition">
-                <i class="fas fa-user-cog"></i> <span id="currentRoleLabel">Staff</span>
-            </button>
-        </div>
-    </header>
 
-    <!-- Status Banner Live -->
-    <div class="max-w-md mx-auto m-3 p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center space-x-3 text-xs text-emerald-800 shadow-sm">
-        <i class="fas fa-signal text-emerald-600 text-base"></i>
-        <div>
-            <span class="font-semibold block">Live Server Cloud Active</span>
-            <span>Terhubung ke Firebase (pt-sbs). Data tersimpan real-time.</span>
-        </div>
-    </div>
-
-    <!-- Main Content Area -->
-    <main class="max-w-md mx-auto px-3 space-y-4">
-
-        <!-- Welcome Card -->
-        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-            <div class="flex justify-between items-start">
+            <div class="space-y-3 text-xs">
                 <div>
-                    <h2 class="text-xl font-bold text-slate-800">Halo, Staff SBS</h2>
-                    <p class="text-xs text-slate-500" id="currentDate">Senin, 19 Oktober 2026</p>
-                </div>
-                <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 font-semibold rounded-full text-xs">
-                    Shift 1 (Pagi)
-                </span>
-            </div>
-            <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-slate-100 text-xs">
-                <div>
-                    <span class="text-slate-400 block">Status Hari Ini</span>
-                    <span class="font-medium text-slate-700">Masuk Kerja</span>
+                    <label class="block font-medium text-slate-600 mb-1">Pilih Divisi Anda</label>
+                    <select id="loginDivisi" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500 font-medium">
+                        <option value="Hotel">🏨 Divisi Hotel</option>
+                        <option value="Waterboom">🏊 Divisi Waterboom</option>
+                        <option value="Masjid">🕌 Divisi Masjid</option>
+                        <option value="Security">🛡️ Divisi Security</option>
+                    </select>
                 </div>
                 <div>
-                    <span class="text-slate-400 block">Jadwal Libur</span>
-                    <span class="font-medium text-emerald-600">Jumat (Rutin)</span>
+                    <label class="block font-medium text-slate-600 mb-1">Nama Lengkap Staf</label>
+                    <input type="text" id="loginNama" placeholder="Masukkan nama Anda" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
                 </div>
-            </div>
-        </div>
-
-        <!-- Quick Access Division Selector -->
-        <div class="grid grid-cols-4 gap-2 text-center text-xs">
-            <button onclick="setDivision('hotel')" class="p-3 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
-                <i class="fas fa-hotel text-emerald-600 text-lg mb-1 block"></i>
-                <span class="font-medium">Hotel</span>
-            </button>
-            <button onclick="setDivision('waterboom')" class="p-3 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
-                <i class="fas fa-swimming-pool text-blue-500 text-lg mb-1 block"></i>
-                <span class="font-medium">Waterboom</span>
-            </button>
-            <button onclick="setDivision('masjid')" class="p-3 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
-                <i class="fas fa-mosque text-amber-500 text-lg mb-1 block"></i>
-                <span class="font-medium">Masjid</span>
-            </button>
-            <button onclick="setDivision('security')" class="p-3 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
-                <i class="fas fa-shield-alt text-slate-700 text-lg mb-1 block"></i>
-                <span class="font-medium">Security</span>
-            </button>
-        </div>
-
-        <!-- Absensi Card -->
-        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-            <h3 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2">
-                <i class="fas fa-camera text-emerald-600"></i> Absensi Kehadiran Online
-            </h3>
-            <div id="absensiForm" class="space-y-3">
-                <div class="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center cursor-pointer hover:bg-slate-50 transition" onclick="triggerCamera()">
-                    <i class="fas fa-cloud-upload-alt text-2xl text-slate-400 mb-1"></i>
-                    <p class="text-xs text-slate-500">Ambil Foto Selfie & Lokasi GPS</p>
-                    <input type="file" id="cameraInput" accept="image/*" capture="user" class="hidden" onchange="handleImage(event)">
+                <div>
+                    <label class="block font-medium text-slate-600 mb-1">PIN Keamanan Divisi</label>
+                    <input type="password" id="loginPIN" placeholder="Masukkan PIN Divisi" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
+                    <p class="text-[10px] text-slate-400 mt-1">*PIN Default Demo: 1234</p>
                 </div>
-                <div id="previewArea" class="hidden text-center">
-                    <img id="selfiePreview" class="w-24 h-24 object-cover rounded-xl mx-auto mb-2 border">
-                    <span class="text-xs text-emerald-600 font-medium"><i class="fas fa-check-circle"></i> Foto Siap Kirim</span>
-                </div>
-                <button onclick="submitAbsensi()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 rounded-xl text-xs transition shadow-sm">
-                    Kirim Absensi Kehadiran
+                <button onclick="prosesLogin()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-3 rounded-xl transition shadow-sm">
+                    Masuk ke Sistem Divisi
                 </button>
             </div>
         </div>
+    </div>
 
-        <!-- Log Laporan Realtime -->
-        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-            <div class="flex justify-between items-center mb-3">
-                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                    <i class="fas fa-list-alt text-emerald-600"></i> Aktivitas & Laporan Terakhir
+    <!-- Halaman Dashboard Utama Staf (Muncul Setelah Login) -->
+    <div id="mainDashboard" class="hidden">
+        <!-- Header / Navbar -->
+        <header class="bg-emerald-800 text-white p-4 sticky top-0 z-50 shadow-md">
+            <div class="max-w-md mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-emerald-700 flex items-center justify-center font-bold border border-emerald-500">
+                        SBS
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight" id="activeUserTitle">STAFF SBS</h1>
+                        <p class="text-xs text-emerald-200" id="activeDivisiBadge">PT Sri Bandiyah Soewarto</p>
+                    </div>
+                </div>
+                <button onclick="prosesLogout()" class="text-xs bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded-full border border-red-500 flex items-center gap-1 text-white">
+                    <i class="fas fa-sign-out-alt"></i> Keluar
+                </button>
+            </div>
+        </header>
+
+        <!-- Status Banner Live -->
+        <div class="max-w-md mx-auto m-3 p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center space-x-3 text-xs text-emerald-800 shadow-sm">
+            <i class="fas fa-signal text-emerald-600 text-base"></i>
+            <div>
+                <span class="font-semibold block">Sistem Terhubung Firebase (pt-sbs)</span>
+                <span>Data tersimpan otomatis sesuai divisi aktif Anda.</span>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="max-w-md mx-auto px-3 space-y-4">
+
+            <!-- Welcome Card Staf -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800" id="welcomeUser">Halo, Staff</h2>
+                        <p class="text-xs text-slate-500">Senin, 19 Oktober 2026</p>
+                    </div>
+                    <span id="badgeDivisiLabel" class="px-2.5 py-1 bg-emerald-100 text-emerald-800 font-semibold rounded-full text-xs">
+                        Divisi
+                    </span>
+                </div>
+            </div>
+
+            <!-- Form Absensi Divisi -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2">
+                    <i class="fas fa-camera text-emerald-600"></i> Absensi Kehadiran Online
                 </h3>
-                <span class="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">Realtime</span>
+                <button onclick="submitAbsensi()" id="btnAbsen" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 rounded-xl text-xs transition shadow-sm">
+                    Check-In Kehadiran Divisi Sekarang
+                </button>
             </div>
-            <div id="logList" class="space-y-2 text-xs">
-                <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-100 flex justify-between items-center">
+
+            <!-- Form Tambah Laporan Tugas Divisi -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2">
+                    <i class="fas fa-plus-circle text-emerald-600"></i> Buat Laporan Tugas Divisi
+                </h3>
+                <div class="space-y-3 text-xs">
                     <div>
-                        <p class="font-medium text-slate-700">Patroli Security Area Masjid</p>
-                        <p class="text-[10px] text-slate-400">Security • 10:15 WIB</p>
+                        <label class="block font-medium text-slate-600 mb-1">Keterangan / Laporan Tugas</label>
+                        <input type="text" id="inputLaporan" placeholder="Contoh: Pembersihan / Patroli Selesai" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
                     </div>
-                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[10px] rounded-full font-semibold">Selesai</span>
-                </div>
-                <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-100 flex justify-between items-center">
-                    <div>
-                        <p class="font-medium text-slate-700">Pembersihan Kolam Utama</p>
-                        <p class="text-[10px] text-slate-400">Waterboom • 08:30 WIB</p>
-                    </div>
-                    <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-[10px] rounded-full font-semibold">Selesai</span>
+                    <button onclick="kirimLaporan()" id="btnLaporan" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-2.5 rounded-xl transition shadow-sm">
+                        Kirim Laporan ke Server
+                    </button>
                 </div>
             </div>
-        </div>
 
-    </main>
+            <!-- Log Laporan Realtime Khusus Divisi -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                        <i class="fas fa-list-alt text-emerald-600"></i> Laporan Terakhir Divisi Anda
+                    </h3>
+                    <span class="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">Realtime</span>
+                </div>
+                <div id="logList" class="space-y-2 text-xs">
+                    <p class="text-slate-400 text-center py-4">Memuat data dari Firebase...</p>
+                </div>
+            </div>
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 px-4 z-40">
-        <div class="max-w-md mx-auto grid grid-cols-4 text-center text-xs">
-            <button class="text-emerald-700 font-semibold flex flex-col items-center">
-                <i class="fas fa-home text-base mb-0.5"></i>
-                <span>Beranda</span>
-            </button>
-            <button class="text-slate-400 hover:text-emerald-600 flex flex-col items-center">
-                <i class="fas fa-calendar-alt text-base mb-0.5"></i>
-                <span>Jadwal</span>
-            </button>
-            <button class="text-slate-400 hover:text-emerald-600 flex flex-col items-center">
-                <i class="fas fa-tasks text-base mb-0.5"></i>
-                <span>Tugas</span>
-            </button>
-            <button class="text-slate-400 hover:text-emerald-600 flex flex-col items-center">
-                <i class="fas fa-user text-base mb-0.5"></i>
-                <span>Profil</span>
-            </button>
-        </div>
-    </nav>
+        </main>
+    </div>
 
     <script>
-        // Config Firebase
+        // Config Firebase pt-sbs
         const firebaseConfig = {
             apiKey: "AIzaSyBvb4yOmBcEeCr2MpTohiVEaTeoZqkbvDU",
             authDomain: "pt-sbs.firebaseapp.com",
@@ -169,40 +148,137 @@
             measurementId: "G-9PP31R0RJ8"
         };
 
-        // Init Firebase
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
         const db = firebase.firestore();
 
-        function triggerCamera() {
-            document.getElementById('cameraInput').click();
-        }
+        let loggedUser = null;
 
-        function handleImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('selfiePreview').src = e.target.result;
-                    document.getElementById('previewArea').classList.remove('hidden');
-                }
-                reader.readAsDataURL(file);
+        // Proses Login Per Divisi
+        function prosesLogin() {
+            const divisi = document.getElementById('loginDivisi').value;
+            const nama = document.getElementById('loginNama').value.trim();
+            const pin = document.getElementById('loginPIN').value.trim();
+
+            if (!nama) {
+                alert('Silakan masukkan nama Anda!');
+                return;
             }
+            if (pin !== '1234') {
+                alert('PIN Keamanan Divisi Salah! (Gunakan PIN default: 1234)');
+                return;
+            }
+
+            loggedUser = { nama: nama, divisi: divisi };
+
+            // Tampilkan Dashboard & Sembunyikan Form Login
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('mainDashboard').classList.remove('hidden');
+
+            document.getElementById('welcomeUser').innerText = 'Halo, ' + nama;
+            document.getElementById('activeUserTitle').innerText = nama;
+            document.getElementById('activeDivisiBadge').innerText = 'Divisi ' + divisi;
+            document.getElementById('badgeDivisiLabel').innerText = divisi;
+
+            loadLaporanDivisi();
         }
 
+        function prosesLogout() {
+            loggedUser = null;
+            document.getElementById('mainDashboard').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('loginNama').value = '';
+            document.getElementById('loginPIN').value = '';
+        }
+
+        // Simpan Absensi Staf ke Firebase
         function submitAbsensi() {
-            alert("Absensi berhasil terkirim ke Server Cloud Firebase PT SBS!");
+            if (!loggedUser) return;
+
+            const btn = document.getElementById('btnAbsen');
+            btn.disabled = true;
+            btn.innerText = 'Mengirim Absensi...';
+
+            db.collection("absensi").add({
+                nama: loggedUser.nama,
+                divisi: loggedUser.divisi,
+                waktu: firebase.firestore.FieldValue.serverTimestamp(),
+                status: "Hadir"
+            })
+            .then(() => {
+                alert('Absensi ' + loggedUser.nama + ' (' + loggedUser.divisi + ') berhasil tersimpan!');
+            })
+            .catch((err) => {
+                alert('Gagal simpan absensi: ' + err.message);
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerText = 'Check-In Kehadiran Divisi Sekarang';
+            });
         }
 
-        function setDivision(name) {
-            alert("Menampilkan divisi: " + name.toUpperCase());
+        // Kirim Laporan Sesuai Divisi Aktif
+        function kirimLaporan() {
+            if (!loggedUser) return;
+
+            const laporan = document.getElementById('inputLaporan').value.trim();
+            if (!laporan) {
+                alert('Ketikkan keterangan laporan tugas!');
+                return;
+            }
+
+            const btn = document.getElementById('btnLaporan');
+            btn.disabled = true;
+            btn.innerText = 'Menyimpan...';
+
+            db.collection("laporan").add({
+                nama: loggedUser.nama,
+                divisi: loggedUser.divisi,
+                laporan: laporan,
+                waktu: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then(() => {
+                alert('Laporan divisi ' + loggedUser.divisi + ' berhasil terkirim!');
+                document.getElementById('inputLaporan').value = '';
+            })
+            .catch((err) => {
+                alert('Gagal kirim laporan: ' + err.message);
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerText = 'Kirim Laporan ke Server';
+            });
         }
 
-        function switchRoleModal() {
-            alert("Ubah Peran Staff / Supervisor / Manager");
+        // Muat Data Laporan Sesuai Divisi Secara Realtime
+        function loadLaporanDivisi() {
+            db.collection("laporan")
+                .where("divisi", "==", loggedUser.divisi)
+                .onSnapshot((snapshot) => {
+                    const logList = document.getElementById('logList');
+                    if (snapshot.empty) {
+                        logList.innerHTML = '<p class="text-slate-400 text-center py-2">Belum ada laporan untuk divisi ini.</p>';
+                        return;
+                    }
+
+                    let html = '';
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        html += `
+                            <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-100 flex justify-between items-center">
+                                <div>
+                                    <p class="font-medium text-slate-700">${data.laporan}</p>
+                                    <p class="text-[10px] text-slate-400">Oleh: ${data.nama || 'Staf'} • Divisi ${data.divisi}</p>
+                                </div>
+                                <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[10px] rounded-full font-semibold">Selesai</span>
+                            </div>
+                        `;
+                    });
+                    logList.innerHTML = html;
+                });
         }
     </script>
 </body>
-                      </html>
-              
+                        </html>
+                    
