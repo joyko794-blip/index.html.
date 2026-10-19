@@ -12,8 +12,8 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans pb-20">
 
-    <!-- MODAL LOGIN AWAL -->
-    <div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <!-- SCREEN 1: HALAMAN LOGIN -->
+    <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
         <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-200 w-full max-w-sm space-y-4">
             <div class="text-center">
                 <div class="w-14 h-14 bg-emerald-800 text-white font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-2 border-2 border-emerald-600">
@@ -35,235 +35,238 @@
                 </div>
                 <div>
                     <label class="block font-medium text-slate-600 mb-1">Nama Staf</label>
-                    <input type="text" id="loginNama" placeholder="Masukkan nama" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
+                    <input type="text" id="loginNama" placeholder="Masukkan nama Anda" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
                 </div>
                 <div>
                     <label class="block font-medium text-slate-600 mb-1">PIN Keamanan</label>
-                    <input type="password" id="loginPIN" placeholder="PIN Divisi" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
+                    <input type="password" id="loginPIN" placeholder="PIN Keamanan" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
                     <p class="text-[10px] text-slate-400 mt-1">*PIN Default Demo: 1234</p>
                 </div>
-                <button onclick="prosesLogin()" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-2.5 rounded-xl transition shadow-sm text-xs">
+                <button type="button" onclick="prosesLogin()" id="btnLoginSubmit" class="w-full bg-emerald-800 hover:bg-emerald-900 active:bg-emerald-950 text-white font-semibold py-3 rounded-xl transition shadow-sm text-xs cursor-pointer">
                     Masuk ke Beranda
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Header / Navbar -->
-    <header class="bg-emerald-800 text-white p-4 sticky top-0 z-40 shadow-md">
-        <div class="max-w-md mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-full bg-emerald-700 flex items-center justify-center font-bold border border-emerald-500 text-sm">
-                    SBS
-                </div>
-                <div>
-                    <h1 class="font-bold text-base leading-tight">STAFF SBS</h1>
-                    <p class="text-[11px] text-emerald-200">PT Sri Bandiyah Soewarto</p>
-                </div>
-            </div>
-            <button onclick="bukaModalLogin()" class="text-xs bg-emerald-700 hover:bg-emerald-600 px-3 py-1.5 rounded-full border border-emerald-500 flex items-center gap-1.5">
-                <i class="fas fa-user-cog text-xs"></i> <span id="userRoleBadge">Staff</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Content Pages Container -->
-    <main class="max-w-md mx-auto px-3 space-y-4 mt-3">
-
-        <!-- TAB 1: BERANDA -->
-        <div id="tabBeranda" class="tab-content space-y-4">
-            <!-- Status Banner Live -->
-            <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center space-x-3 text-xs text-emerald-800 shadow-sm">
-                <i class="fas fa-chart-line text-emerald-600 text-base"></i>
-                <div>
-                    <span class="font-semibold block text-emerald-900">Live Server Cloud Active</span>
-                    <span class="text-emerald-700">Terhubung ke Firebase (pt-sbs). Data tersimpan real-time.</span>
-                </div>
-            </div>
-
-            <!-- Welcome Card -->
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800" id="welcomeUserTitle">Halo, Staff SBS</h2>
-                        <p class="text-xs text-slate-400 mt-0.5">Senin, 19 Oktober 2026</p>
-                    </div>
-                    <span class="px-3 py-1 bg-emerald-100 text-emerald-800 font-semibold rounded-full text-xs">
-                        Shift 1 (Pagi)
-                    </span>
-                </div>
-                <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-slate-100 text-xs">
-                    <div>
-                        <span class="text-slate-400 block mb-0.5">Status Hari Ini</span>
-                        <span class="font-semibold text-slate-800">Masuk Kerja</span>
+    <!-- SCREEN 2: APLIKASI UTAMA (MUNCUL SETELAH LOGIN) -->
+    <div id="appContainer" class="hidden">
+        <!-- Header / Navbar -->
+        <header class="bg-emerald-800 text-white p-4 sticky top-0 z-40 shadow-md">
+            <div class="max-w-md mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-emerald-700 flex items-center justify-center font-bold border border-emerald-500 text-sm">
+                        SBS
                     </div>
                     <div>
-                        <span class="text-slate-400 block mb-0.5">Jadwal Libur</span>
-                        <span class="font-semibold text-emerald-600">Jumat (Rutin)</span>
+                        <h1 class="font-bold text-base leading-tight">STAFF SBS</h1>
+                        <p class="text-[11px] text-emerald-200">PT Sri Bandiyah Soewarto</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Quick Access Division Selector -->
-            <div class="grid grid-cols-4 gap-2 text-center text-xs">
-                <button onclick="pilihDivisi('Hotel')" class="p-3 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
-                    <i class="fas fa-hotel text-emerald-600 text-xl mb-1.5 block"></i>
-                    <span class="font-medium text-slate-700">Hotel</span>
-                </button>
-                <button onclick="pilihDivisi('Waterboom')" class="p-3 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
-                    <i class="fas fa-swimming-pool text-blue-500 text-xl mb-1.5 block"></i>
-                    <span class="font-medium text-slate-700">Waterboom</span>
-                </button>
-                <button onclick="pilihDivisi('Masjid')" class="p-3 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
-                    <i class="fas fa-mosque text-amber-500 text-xl mb-1.5 block"></i>
-                    <span class="font-medium text-slate-700">Masjid</span>
-                </button>
-                <button onclick="pilihDivisi('Security')" class="p-3 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
-                    <i class="fas fa-shield-alt text-slate-700 text-xl mb-1.5 block"></i>
-                    <span class="font-medium text-slate-700">Security</span>
+                <button onclick="prosesLogout()" class="text-xs bg-emerald-700 hover:bg-emerald-600 px-3 py-1.5 rounded-full border border-emerald-500 flex items-center gap-1.5">
+                    <i class="fas fa-sign-out-alt text-xs"></i> <span id="userRoleBadge">Staff</span>
                 </button>
             </div>
+        </header>
 
-            <!-- Absensi Card -->
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2">
-                    <i class="fas fa-camera text-emerald-600"></i> Absensi Kehadiran Online
-                </h3>
-                <div class="space-y-3">
-                    <div class="border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center cursor-pointer hover:bg-slate-50 transition" onclick="triggerCamera()">
-                        <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-2 text-slate-400">
-                            <i class="fas fa-cloud-upload-alt text-lg"></i>
+        <!-- Content Pages Container -->
+        <main class="max-w-md mx-auto px-3 space-y-4 mt-3">
+
+            <!-- TAB 1: BERANDA -->
+            <div id="tabBeranda" class="tab-content space-y-4">
+                <!-- Status Banner Live -->
+                <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center space-x-3 text-xs text-emerald-800 shadow-sm">
+                    <i class="fas fa-chart-line text-emerald-600 text-base"></i>
+                    <div>
+                        <span class="font-semibold block text-emerald-900">Live Server Cloud Active</span>
+                        <span class="text-emerald-700">Terhubung ke Firebase (pt-sbs). Data tersimpan real-time.</span>
+                    </div>
+                </div>
+
+                <!-- Welcome Card -->
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800" id="welcomeUserTitle">Halo, Staff SBS</h2>
+                            <p class="text-xs text-slate-400 mt-0.5">Senin, 19 Oktober 2026</p>
                         </div>
-                        <p class="text-xs text-slate-500 font-medium">Ambil Foto Selfie & Lokasi GPS</p>
-                        <input type="file" id="cameraInput" accept="image/*" capture="user" class="hidden" onchange="handleImage(event)">
+                        <span class="px-3 py-1 bg-emerald-100 text-emerald-800 font-semibold rounded-full text-xs">
+                            Shift 1 (Pagi)
+                        </span>
                     </div>
-                    <div id="previewArea" class="hidden text-center">
-                        <img id="selfiePreview" class="w-24 h-24 object-cover rounded-xl mx-auto mb-2 border">
-                        <span class="text-xs text-emerald-600 font-medium"><i class="fas fa-check-circle"></i> Foto Siap Kirim</span>
+                    <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-slate-100 text-xs">
+                        <div>
+                            <span class="text-slate-400 block mb-0.5">Status Hari Ini</span>
+                            <span class="font-semibold text-slate-800">Masuk Kerja</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block mb-0.5">Jadwal Libur</span>
+                            <span class="font-semibold text-emerald-600">Jumat (Rutin)</span>
+                        </div>
                     </div>
-                    <button onclick="submitAbsensi()" id="btnAbsen" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-3 rounded-xl text-xs transition shadow-sm">
-                        Kirim Absensi Kehadiran
+                </div>
+
+                <!-- Quick Access Division Selector -->
+                <div class="grid grid-cols-4 gap-2 text-center text-xs">
+                    <button onclick="pilihDivisi('Hotel')" class="p-3 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
+                        <i class="fas fa-hotel text-emerald-600 text-xl mb-1.5 block"></i>
+                        <span class="font-medium text-slate-700">Hotel</span>
+                    </button>
+                    <button onclick="pilihDivisi('Waterboom')" class="p-3 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
+                        <i class="fas fa-swimming-pool text-blue-500 text-xl mb-1.5 block"></i>
+                        <span class="font-medium text-slate-700">Waterboom</span>
+                    </button>
+                    <button onclick="pilihDivisi('Masjid')" class="p-3 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
+                        <i class="fas fa-mosque text-amber-500 text-xl mb-1.5 block"></i>
+                        <span class="font-medium text-slate-700">Masjid</span>
+                    </button>
+                    <button onclick="pilihDivisi('Security')" class="p-3 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-emerald-500 transition">
+                        <i class="fas fa-shield-alt text-slate-700 text-xl mb-1.5 block"></i>
+                        <span class="font-medium text-slate-700">Security</span>
+                    </button>
+                </div>
+
+                <!-- Absensi Card -->
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2">
+                        <i class="fas fa-camera text-emerald-600"></i> Absensi Kehadiran Online
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center cursor-pointer hover:bg-slate-50 transition" onclick="triggerCamera()">
+                            <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-2 text-slate-400">
+                                <i class="fas fa-cloud-upload-alt text-lg"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 font-medium">Ambil Foto Selfie & Lokasi GPS</p>
+                            <input type="file" id="cameraInput" accept="image/*" capture="user" class="hidden" onchange="handleImage(event)">
+                        </div>
+                        <div id="previewArea" class="hidden text-center">
+                            <img id="selfiePreview" class="w-24 h-24 object-cover rounded-xl mx-auto mb-2 border">
+                            <span class="text-xs text-emerald-600 font-medium"><i class="fas fa-check-circle"></i> Foto Siap Kirim</span>
+                        </div>
+                        <button onclick="submitAbsensi()" id="btnAbsen" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-semibold py-3 rounded-xl text-xs transition shadow-sm">
+                            Kirim Absensi Kehadiran
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Log Laporan Realtime -->
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fas fa-list-alt text-emerald-600"></i> Aktivitas & Laporan Terakhir
+                        </h3>
+                        <span class="text-[10px] text-emerald-700 bg-emerald-100/70 px-2.5 py-0.5 rounded-full font-semibold">Realtime</span>
+                    </div>
+                    <div id="logList" class="space-y-2 text-xs">
+                        <div class="p-3 bg-slate-50/80 rounded-xl border border-slate-100 flex justify-between items-center">
+                            <div>
+                                <p class="font-semibold text-slate-700">Patroli Security Area Masjid</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Security • 10:15 WIB</p>
+                            </div>
+                            <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-[10px] rounded-full font-semibold">Selesai</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: JADWAL SHIFT -->
+            <div id="tabJadwal" class="tab-content hidden space-y-4">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 class="text-lg font-bold text-slate-800 mb-1">Jadwal Shift Kerja</h2>
+                    <p class="text-xs text-slate-500 mb-4">Ketentuan Roster Mingguan PT SBS</p>
+
+                    <div class="space-y-2 text-xs">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                            <span class="font-medium text-slate-700">Senin - Kamis</span>
+                            <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-semibold">Masuk Kerja (08:00 - 16:00)</span>
+                        </div>
+                        <div class="p-3 bg-red-50 border border-red-200 rounded-xl flex justify-between items-center">
+                            <span class="font-bold text-red-700">Jumat</span>
+                            <span class="px-2.5 py-1 bg-red-100 text-red-800 rounded-full font-bold">RUTIN LIBUR</span>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                            <span class="font-medium text-slate-700">Sabtu - Minggu</span>
+                            <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-semibold">Masuk Kerja (08:00 - 17:00)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: TUGAS DIVISI -->
+            <div id="tabTugas" class="tab-content hidden space-y-4">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <h2 class="text-lg font-bold text-slate-800 mb-1">Daftar Tugas Divisi</h2>
+                    <p class="text-xs text-slate-500 mb-4">Tugas Harian Staf PT SBS</p>
+
+                    <div class="space-y-3 text-xs">
+                        <div class="p-3 border rounded-xl flex justify-between items-center bg-emerald-50/50 border-emerald-200">
+                            <div>
+                                <p class="font-semibold text-slate-800">Cek Kebersihan Area</p>
+                                <p class="text-[10px] text-slate-500">Divisi Hotel / Masjid / Waterboom</p>
+                            </div>
+                            <button onclick="alert('Tugas ditandai Selesai!')" class="px-3 py-1 bg-emerald-700 text-white rounded-lg font-semibold text-[11px]">Selesaikan</button>
+                        </div>
+                        <div class="p-3 border rounded-xl flex justify-between items-center bg-slate-50 border-slate-200">
+                            <div>
+                                <p class="font-semibold text-slate-800">Patroli Rutin Keliling</p>
+                                <p class="text-[10px] text-slate-500">Divisi Security</p>
+                            </div>
+                            <button onclick="alert('Patroli Dimulai!')" class="px-3 py-1 bg-slate-700 text-white rounded-lg font-semibold text-[11px]">Proses</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: PROFIL STAF -->
+            <div id="tabProfil" class="tab-content hidden space-y-4">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-center space-y-3">
+                    <div class="w-20 h-20 bg-emerald-800 text-white rounded-full flex items-center justify-center font-bold text-2xl mx-auto border-4 border-emerald-100">
+                        SBS
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800" id="profilNama">Staf SBS</h2>
+                        <p class="text-xs text-emerald-700 font-semibold" id="profilDivisi">Divisi Staf</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 space-y-2 text-xs">
+                        <div class="flex justify-between py-1 text-slate-600">
+                            <span>Perusahaan:</span>
+                            <span class="font-semibold text-slate-800">PT Sri Bandiyah Soewarto</span>
+                        </div>
+                        <div class="flex justify-between py-1 text-slate-600">
+                            <span>Status Akun:</span>
+                            <span class="font-semibold text-emerald-600">Aktif</span>
+                        </div>
+                    </div>
+                    <button onclick="prosesLogout()" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 rounded-xl text-xs transition mt-2">
+                        Keluar / Logout
                     </button>
                 </div>
             </div>
 
-            <!-- Log Laporan Realtime -->
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <div class="flex justify-between items-center mb-3">
-                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-                        <i class="fas fa-list-alt text-emerald-600"></i> Aktivitas & Laporan Terakhir
-                    </h3>
-                    <span class="text-[10px] text-emerald-700 bg-emerald-100/70 px-2.5 py-0.5 rounded-full font-semibold">Realtime</span>
-                </div>
-                <div id="logList" class="space-y-2 text-xs">
-                    <div class="p-3 bg-slate-50/80 rounded-xl border border-slate-100 flex justify-between items-center">
-                        <div>
-                            <p class="font-semibold text-slate-700">Patroli Security Area Masjid</p>
-                            <p class="text-[11px] text-slate-400 mt-0.5">Security • 10:15 WIB</p>
-                        </div>
-                        <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-[10px] rounded-full font-semibold">Selesai</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </main>
 
-        <!-- TAB 2: JADWAL SHIFT -->
-        <div id="tabJadwal" class="tab-content hidden space-y-4">
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="text-lg font-bold text-slate-800 mb-1">Jadwal Shift Kerja</h2>
-                <p class="text-xs text-slate-500 mb-4">Ketentuan Roster Mingguan PT SBS</p>
-
-                <div class="space-y-2 text-xs">
-                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
-                        <span class="font-medium text-slate-700">Senin - Kamis</span>
-                        <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-semibold">Masuk Kerja (08:00 - 16:00)</span>
-                    </div>
-                    <div class="p-3 bg-red-50 border border-red-200 rounded-xl flex justify-between items-center">
-                        <span class="font-bold text-red-700">Jumat</span>
-                        <span class="px-2.5 py-1 bg-red-100 text-red-800 rounded-full font-bold">RUTIN LIBUR</span>
-                    </div>
-                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
-                        <span class="font-medium text-slate-700">Sabtu - Minggu</span>
-                        <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full font-semibold">Masuk Kerja (08:00 - 17:00)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: TUGAS DIVISI -->
-        <div id="tabTugas" class="tab-content hidden space-y-4">
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="text-lg font-bold text-slate-800 mb-1">Daftar Tugas Divisi</h2>
-                <p class="text-xs text-slate-500 mb-4">Tugas Harian Staf PT SBS</p>
-
-                <div class="space-y-3 text-xs">
-                    <div class="p-3 border rounded-xl flex justify-between items-center bg-emerald-50/50 border-emerald-200">
-                        <div>
-                            <p class="font-semibold text-slate-800">Cek Kebersihan Area</p>
-                            <p class="text-[10px] text-slate-500">Divisi Hotel / Masjid / Waterboom</p>
-                        </div>
-                        <button onclick="alert('Tugas ditandai Selesai!')" class="px-3 py-1 bg-emerald-700 text-white rounded-lg font-semibold text-[11px]">Selesaikan</button>
-                    </div>
-                    <div class="p-3 border rounded-xl flex justify-between items-center bg-slate-50 border-slate-200">
-                        <div>
-                            <p class="font-semibold text-slate-800">Patroli Rutin Keliling</p>
-                            <p class="text-[10px] text-slate-500">Divisi Security</p>
-                        </div>
-                        <button onclick="alert('Patroli Dimulai!')" class="px-3 py-1 bg-slate-700 text-white rounded-lg font-semibold text-[11px]">Proses</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: PROFIL STAF -->
-        <div id="tabProfil" class="tab-content hidden space-y-4">
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-center space-y-3">
-                <div class="w-20 h-20 bg-emerald-800 text-white rounded-full flex items-center justify-center font-bold text-2xl mx-auto border-4 border-emerald-100">
-                    SBS
-                </div>
-                <div>
-                    <h2 class="text-lg font-bold text-slate-800" id="profilNama">Staf SBS</h2>
-                    <p class="text-xs text-emerald-700 font-semibold" id="profilDivisi">Divisi Staf</p>
-                </div>
-                <div class="pt-3 border-t border-slate-100 space-y-2 text-xs">
-                    <div class="flex justify-between py-1 text-slate-600">
-                        <span>Perusahaan:</span>
-                        <span class="font-semibold text-slate-800">PT Sri Bandiyah Soewarto</span>
-                    </div>
-                    <div class="flex justify-between py-1 text-slate-600">
-                        <span>Status Akun:</span>
-                        <span class="font-semibold text-emerald-600">Aktif</span>
-                    </div>
-                </div>
-                <button onclick="bukaModalLogin()" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 rounded-xl text-xs transition mt-2">
-                    Ganti Akun / Logout
+        <!-- Bottom Navigation Bar -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2.5 px-4 z-40">
+            <div class="max-w-md mx-auto grid grid-cols-4 text-center text-[11px]">
+                <button onclick="switchTab('Beranda')" id="navBeranda" class="nav-btn text-emerald-700 font-semibold flex flex-col items-center">
+                    <i class="fas fa-home text-lg mb-0.5"></i>
+                    <span>Beranda</span>
+                </button>
+                <button onclick="switchTab('Jadwal')" id="navJadwal" class="nav-btn text-slate-400 hover:text-emerald-600 flex flex-col items-center">
+                    <i class="fas fa-calendar-alt text-lg mb-0.5"></i>
+                    <span>Jadwal</span>
+                </button>
+                <button onclick="switchTab('Tugas')" id="navTugas" class="nav-btn text-slate-400 hover:text-emerald-600 flex flex-col items-center">
+                    <i class="fas fa-tasks text-lg mb-0.5"></i>
+                    <span>Tugas</span>
+                </button>
+                <button onclick="switchTab('Profil')" id="navProfil" class="nav-btn text-slate-400 hover:text-emerald-600 flex flex-col items-center">
+                    <i class="fas fa-user text-lg mb-0.5"></i>
+                    <span>Profil</span>
                 </button>
             </div>
-        </div>
-
-    </main>
-
-    <!-- Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2.5 px-4 z-40">
-        <div class="max-w-md mx-auto grid grid-cols-4 text-center text-[11px]">
-            <button onclick="switchTab('Beranda')" id="navBeranda" class="nav-btn text-emerald-700 font-semibold flex flex-col items-center">
-                <i class="fas fa-home text-lg mb-0.5"></i>
-                <span>Beranda</span>
-            </button>
-            <button onclick="switchTab('Jadwal')" id="navJadwal" class="nav-btn text-slate-400 hover:text-emerald-600 flex flex-col items-center">
-                <i class="fas fa-calendar-alt text-lg mb-0.5"></i>
-                <span>Jadwal</span>
-            </button>
-            <button onclick="switchTab('Tugas')" id="navTugas" class="nav-btn text-slate-400 hover:text-emerald-600 flex flex-col items-center">
-                <i class="fas fa-tasks text-lg mb-0.5"></i>
-                <span>Tugas</span>
-            </button>
-            <button onclick="switchTab('Profil')" id="navProfil" class="nav-btn text-slate-400 hover:text-emerald-600 flex flex-col items-center">
-                <i class="fas fa-user text-lg mb-0.5"></i>
-                <span>Profil</span>
-            </button>
-        </div>
-    </nav>
+        </nav>
+    </div>
 
     <script>
         // Config Firebase pt-sbs
@@ -285,119 +288,46 @@
         let loggedUser = null;
 
         function prosesLogin() {
-            const divisi = document.getElementById('loginDivisi').value;
-            const nama = document.getElementById('loginNama').value.trim();
-            const pin = document.getElementById('loginPIN').value.trim();
+            try {
+                const divisi = document.getElementById('loginDivisi').value;
+                const nama = document.getElementById('loginNama').value.trim();
+                const pin = document.getElementById('loginPIN').value.trim();
 
-            if (!nama) {
-                alert('Masukkan nama staf!');
-                return;
+                if (!nama) {
+                    alert('Masukkan nama staf terlebih dahulu!');
+                    return;
+                }
+                if (pin !== '1234') {
+                    alert('PIN Keamanan Salah! (Default: 1234)');
+                    return;
+                }
+
+                loggedUser = { nama: nama, divisi: divisi };
+
+                // Pindah Tampilan ke Dashboard Utama
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('appContainer').classList.remove('hidden');
+
+                document.getElementById('welcomeUserTitle').innerText = 'Halo, ' + nama;
+                document.getElementById('userRoleBadge').innerText = divisi;
+                document.getElementById('profilNama').innerText = nama;
+                document.getElementById('profilDivisi').innerText = 'Divisi ' + divisi;
+
+                loadRealtimeLaporan();
+            } catch (err) {
+                alert('Terjadi kesalahan: ' + err.message);
             }
-            if (pin !== '1234') {
-                alert('PIN Keamanan Salah! (Default: 1234)');
-                return;
-            }
-
-            loggedUser = { nama: nama, divisi: divisi };
-
-            document.getElementById('loginModal').classList.add('hidden');
-            document.getElementById('welcomeUserTitle').innerText = 'Halo, ' + nama;
-            document.getElementById('userRoleBadge').innerText = divisi;
-            document.getElementById('profilNama').innerText = nama;
-            document.getElementById('profilDivisi').innerText = 'Divisi ' + divisi;
-
-            loadRealtimeLaporan();
         }
 
-        function bukaModalLogin() {
-            document.getElementById('loginModal').classList.remove('hidden');
+        function prosesLogout() {
+            loggedUser = null;
+            document.getElementById('appContainer').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('loginNama').value = '';
+            document.getElementById('loginPIN').value = '';
         }
 
         // Fungsi Pindah Halaman / Switching Tab
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.nav-btn').forEach(el => {
-                el.classList.remove('text-emerald-700', 'font-semibold');
-                el.classList.add('text-slate-400');
-            });
-
-            document.getElementById('tab' + tabName).classList.remove('hidden');
-            const activeNav = document.getElementById('nav' + tabName);
-            activeNav.classList.remove('text-slate-400');
-            activeNav.classList.add('text-emerald-700', 'font-semibold');
-        }
-
-        function triggerCamera() {
-            document.getElementById('cameraInput').click();
-        }
-
-        function handleImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('selfiePreview').src = e.target.result;
-                    document.getElementById('previewArea').classList.remove('hidden');
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function submitAbsensi() {
-            if (!loggedUser) {
-                alert('Silakan login terlebih dahulu!');
-                bukaModalLogin();
-                return;
-            }
-
-            const btn = document.getElementById('btnAbsen');
-            btn.disabled = true;
-            btn.innerText = 'Mengirim Absensi...';
-
-            db.collection("absensi").add({
-                nama: loggedUser.nama,
-                divisi: loggedUser.divisi,
-                waktu: firebase.firestore.FieldValue.serverTimestamp(),
-                status: "Hadir"
-            })
-            .then(() => {
-                alert('Absensi ' + loggedUser.nama + ' (' + loggedUser.divisi + ') berhasil tersimpan!');
-            })
-            .catch((err) => {
-                alert('Gagal simpan absensi: ' + err.message);
-            })
-            .finally(() => {
-                btn.disabled = false;
-                btn.innerText = 'Kirim Absensi Kehadiran';
-            });
-        }
-
-        function pilihDivisi(namaDivisi) {
-            alert('Akses Divisi: ' + namaDivisi);
-        }
-
-        function loadRealtimeLaporan() {
-            db.collection("laporan").orderBy("waktu", "desc").limit(5)
-                .onSnapshot((snapshot) => {
-                    const logList = document.getElementById('logList');
-                    if (!snapshot.empty) {
-                        let html = '';
-                        snapshot.forEach((doc) => {
-                            const data = doc.data();
-                            html += `
-                                <div class="p-3 bg-slate-50/80 rounded-xl border border-slate-100 flex justify-between items-center">
-                                    <div>
-                                        <p class="font-semibold text-slate-700">${data.laporan || 'Aktivitas Staf'}</p>
-                                        <p class="text-[11px] text-slate-400 mt-0.5">${data.divisi || 'General'} • Oleh ${data.nama || 'Staf'}</p>
-                                    </div>
-                                    <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-[10px] rounded-full font-semibold">Selesai</span>
-                                </div>
-                            `;
-                        });
-                        logList.innerHTML = html;
-                    }
-                });
-        }
-    </script>
-</body>
-</html>
+            document.querySelectorAll('.nav-
